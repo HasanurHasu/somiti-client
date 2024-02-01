@@ -7,6 +7,8 @@ import Register from "../Pages/Register";
 import Login from "../Pages/Login";
 import Dashboard from "../Dashboard/Dashboard";
 import TotalMember from "../Dashboard/TotalMember";
+import MemberInfo from "../Dashboard/MemberInfo";
+import PrivateRoute from "./PrivateRoute";
 
 const Router = createBrowserRouter([
     {
@@ -29,11 +31,16 @@ const Router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <Dashboard />,
+        element: <PrivateRoute><Dashboard /></PrivateRoute>,
         children: [
             {
                 path: "/dashboard/all-members",
-                element: <TotalMember />
+                element: <PrivateRoute><TotalMember /></PrivateRoute>
+            },
+            {
+                path: '/dashboard/member/:id',
+                element: <PrivateRoute><MemberInfo></MemberInfo></PrivateRoute>,
+                loader: ({ params }) => fetch(`http://localhost:5000/user/${params.id}`)
             }
         ]
     }

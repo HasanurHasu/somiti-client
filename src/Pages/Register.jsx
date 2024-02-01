@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,6 +8,15 @@ import { AuthContext } from "../Provider/AuthProvider";
 const Register = () => {
 
     const { createUser, singInWithGoogle } = useContext(AuthContext);
+    const [counts, setCounts] = useState([]);
+    const { count } = counts;
+    useEffect(() => {
+        fetch('http://localhost:5000/userLength')
+            .then(res => res.json())
+            .then(data => setCounts(data))
+    }, [])
+    console.log(1000 + count);
+
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -39,6 +48,7 @@ const Register = () => {
                 console.log(result.user.metadata.creationTime);
                 toast.success('User Registration Successfully');
                 const user = {
+                    userId: 1000 + count,
                     name,
                     email,
                     createTime: result.user.metadata.creationTime,
@@ -70,6 +80,7 @@ const Register = () => {
                 console.log(result.user);
                 navigate(location?.state ? location.state : '/')
                 const user = {
+                    userId: 1000 + count,
                     name: result.user.displayName,
                     email: result.user.email,
                     createTime: result.user.metadata.creationTime,

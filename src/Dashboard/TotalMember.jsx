@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const TotalMember = () => {
 
@@ -48,7 +49,8 @@ const TotalMember = () => {
                         {/* head */}
                         <thead>
                             <tr className="text-base text-black bg-blue-400">
-                                <th>ক্রমিক</th>
+                                <th className="text-center">ক্রমিক</th>
+                                <th className="text-center">আইডি নং</th>
                                 <th>সদস্যের নাম</th>
                                 <th>সদস্যের ইমেইল</th>
                                 <th className="text-center">ডিলিট</th>
@@ -57,8 +59,10 @@ const TotalMember = () => {
                         <tbody>
                             {
                                 users.map((user, index) => <tr className="hover:bg-blue-100 cursor-pointer" key={user._id}>
-                                    <th>{index + 1}</th>
-                                    <th>{user.name}</th>
+                                    <th className="text-center">{index + 1}</th>
+                                    <th className="text-center">{user.userId}</th>
+                                    <Link to={`/dashboard/member/${user._id}`}><th>{user.name}</th></Link>
+                                    
                                     <th>{user.email}</th>
                                     <th className="text-center">
                                         <button>
