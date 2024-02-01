@@ -9,6 +9,7 @@ import Dashboard from "../Dashboard/Dashboard";
 import TotalMember from "../Dashboard/TotalMember";
 import MemberInfo from "../Dashboard/MemberInfo";
 import PrivateRoute from "./PrivateRoute";
+import ProfileUpdate from "../Dashboard/ProfileUpdate";
 
 const Router = createBrowserRouter([
     {
@@ -41,6 +42,11 @@ const Router = createBrowserRouter([
                 path: '/dashboard/member/:id',
                 element: <PrivateRoute><MemberInfo></MemberInfo></PrivateRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5000/user/${params.id}`)
+            },
+            {
+                path: '/dashboard/update-profile/:id',
+                element: <PrivateRoute><ProfileUpdate></ProfileUpdate></PrivateRoute>,
+                // loader: ({ params }) => fetch(`http://localhost:5000/user/${params.id}`)
             }
         ]
     }
