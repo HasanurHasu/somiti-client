@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { updateProfile } from "firebase/auth";
 import { AuthContext } from "../Provider/AuthProvider";
+import { axiosPublic } from "../Hooks/useAxiosPublic";
 
 const Register = () => {
 
@@ -58,16 +59,8 @@ const Register = () => {
                     displayName: name,
                     // photoURL: photoUrl
                 })
-                fetch('http://localhost:5000/user', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(user)
-                })
-                    .then(res => res.json())
-                    .then(data => console.log(data))
-                navigate(location?.state ? location.state : '/')
+                axiosPublic.post('/user', user)
+                .then(res => console.log(res.data.insertedId))
             })
             .catch(error => {
                 console.log(error);
@@ -86,15 +79,8 @@ const Register = () => {
                     createTime: result.user.metadata.creationTime,
                     loginTime: result.user.metadata.lastSignInTime
                 }
-                fetch('http://localhost:5000/user', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(user)
-                })
-                    .then(res => res.json())
-                    .then(data => console.log(data))
+                axiosPublic.post('/user', user)
+                .then(res => console.log(res.data))
 
             })
             .catch(error => {
