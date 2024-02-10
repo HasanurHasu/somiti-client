@@ -22,18 +22,9 @@ const Dashboard = () => {
         navigate('/')
     }
 
-    return (
-        // <div className="">
-        //     <div className="flex justify-start gap-6">
-        //         <div className="px-4 bg-gray-300">
-        //             <Sidebar />
-        //         </div>
-        //         <div className="mt-4 w-full mr-24">
-        //             <Outlet/>
-        //         </div>
-        //     </div>
-        // </div>
+    const isAdmin = true;
 
+    return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
@@ -53,15 +44,25 @@ const Dashboard = () => {
             <div className="drawer-side">
                 <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                 <div className="menu p-4 w-60 bg-base-200 text-base-content flex flex-col justify-between h-screen">
-                    <div className="full">
-                        <img className="w-24 my-4" src={img} alt="" />
-                        <div className="flex flex-col gap-1">
-                            <Link to='/dashboard/all-members'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><BsFillPeopleFill className="text-lg" /> <span>মোট সদস্য</span></button></Link>
-                            <Link><div className="w-full">
-                                <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><FaMoneyCheckDollar className="text-lg" /> <span>লোনের হিসাব</span></button></div></Link>
-                            <Link to='/dashboard/update-profile'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><RxUpdate className="text-lg" /> <span>প্রফাইল আপডেট</span></button></Link>
-                        </div>
-                    </div>
+                    {
+                        isAdmin ?
+                            <div className="full">
+                                <img className="w-24 my-4" src={img} alt="" />
+                                <div className="flex flex-col gap-1">
+                                    <Link to='/dashboard/all-members'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><BsFillPeopleFill className="text-lg" /> <span>মোট সদস্য</span></button></Link>
+                                    <Link><div className="w-full">
+                                        <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><FaMoneyCheckDollar className="text-lg" /> <span>লোনের হিসাব</span></button></div></Link>
+                                    <Link to='/dashboard/update-profile'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><RxUpdate className="text-lg" /> <span>প্রফাইল আপডেট</span></button></Link>
+                                </div>
+                            </div>
+                            :
+                            <div className="full">
+                                <img className="w-24 my-4" src={img} alt="" />
+                                <div className="flex flex-col gap-1">
+                                    <Link to='/dashboard/update-profile'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><RxUpdate className="text-lg" /> <span>প্রফাইল আপডেট</span></button></Link>
+                                </div>
+                            </div>
+                    }
                     <div className="py-2">
                         <button onClick={handleLogout} className="flex items-start gap-2"><TbLogout2 className="text-lg" /> <span>লগ আউট</span></button>
                     </div>
