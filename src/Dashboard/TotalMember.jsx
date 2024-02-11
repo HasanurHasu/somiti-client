@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { MdDelete } from "react-icons/md";
+import { MdAdminPanelSettings, MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import Swal from 'sweetalert2'
@@ -11,10 +11,30 @@ const TotalMember = () => {
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axiosPublic.get('/users');
+            const res = await axiosPublic.get('/users', {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('access-token')}`
+                }
+            });
             return res.data
         }
     })
+
+    const handleAdmin = user => {
+        axiosPublic.patch(`/user/admin/${user._id}`)
+            .then(res => {
+                if (res.data.modifiedCount > 0) {
+                    refetch()
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: `${user.name} is admin now.`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+    }
 
     const handleDelete = (user) => {
         Swal.fire({
@@ -28,16 +48,16 @@ const TotalMember = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 axiosPublic.delete(`/user/${user._id}`)
-                .then(res => {
-                    if (res.data.deletedCount > 0) {
-                        refetch();
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "Your file has been deleted.",
-                            icon: "success"
-                        });
-                    }
-                })
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
 
             }
         });
@@ -67,12 +87,13 @@ const TotalMember = () => {
 
                                     <th>{user.email}</th>
                                     <th className="text-center">
-                                        <select id="ddlViewBy" name="type" className="rounded-md text-center">
-                                            <option value="">Select One</option>
-                                            <option value="admin">এডমিন</option>
-                                            <option value="manager">ম্যনেজার</option>
-                                            <option value="member">মেম্বার</option>
-                                        </select>
+                                        {
+                                            user.role === 'admin' ? 'এডমিন'
+                                                :
+                                                <button onClick={() => handleAdmin(user)} className="text-xl p-2 bg-blue-500 rounded text-white">
+                                                    <MdAdminPanelSettings className="text-lg" />
+                                                </button>
+                                        }
                                     </th>
                                     <th onClick={() => handleDelete(user)} className="text-center">
                                         <button >
