@@ -16,19 +16,32 @@ const TotalMember = () => {
     })
 
     const handleAdmin = user => {
-        axiosSecure.patch(`/users/admin/${user._id}`)
-            .then(res => {
-                if (res.data.modifiedCount > 0) {
-                    refetch()
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: `${user.name} is admin now.`,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            })
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Make Admin"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.patch(`/user/admin/${user._id}`)
+                    .then(res => {
+                        if (res.data.modifiedCount > 0) {
+                            refetch()
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: `${user.name} is admin now.`,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    })
+            }
+        })
     }
 
     const handleDelete = (user) => {
@@ -79,8 +92,8 @@ const TotalMember = () => {
                                 <th className="text-center">{index + 1}</th>
                                 <th className="text-center">{user.userId}</th>
                                 <th>
-                                <Link to={`/dashboard/member/${user._id}`}>{user.name}</Link></th>
-                                
+                                    <Link to={`/dashboard/member/${user._id}`}>{user.name}</Link></th>
+
 
                                 <th>{user.email}</th>
                                 <th className="text-center">

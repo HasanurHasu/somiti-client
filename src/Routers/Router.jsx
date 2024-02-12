@@ -10,6 +10,7 @@ import TotalMember from "../Dashboard/TotalMember";
 import MemberInfo from "../Dashboard/MemberInfo";
 import PrivateRoute from "./PrivateRoute";
 import ProfileUpdate from "../Dashboard/ProfileUpdate";
+import AdminRoute from "./AdminRoute";
 
 const Router = createBrowserRouter([
     {
@@ -36,7 +37,7 @@ const Router = createBrowserRouter([
         children: [
             {
                 path: "/dashboard/all-members",
-                element: <PrivateRoute><TotalMember /></PrivateRoute>
+                element: <AdminRoute><TotalMember /></AdminRoute>
             },
             {
                 path: '/dashboard/member/:id',
