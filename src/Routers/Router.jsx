@@ -11,6 +11,7 @@ import MemberInfo from "../Dashboard/MemberInfo";
 import PrivateRoute from "./PrivateRoute";
 import ProfileUpdate from "../Dashboard/ProfileUpdate";
 import AdminRoute from "./AdminRoute";
+import ApplyForLoan from "../Dashboard/ApplyForLoan";
 
 const Router = createBrowserRouter([
     {
@@ -37,12 +38,16 @@ const Router = createBrowserRouter([
         children: [
             {
                 path: "/dashboard/all-members",
-                element: <TotalMember />
+                element: <AdminRoute><TotalMember /></AdminRoute>
             },
             {
                 path: '/dashboard/member/:id',
                 element: <PrivateRoute><MemberInfo></MemberInfo></PrivateRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5000/user/${params.id}`)
+            },
+            {
+                path: '/dashboard/applyLoan',
+                element: <PrivateRoute><ApplyForLoan></ApplyForLoan></PrivateRoute>
             },
             {
                 path: '/dashboard/update-profile/:id',
