@@ -1,27 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 import { MdAdminPanelSettings, MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
 import Swal from 'sweetalert2'
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 
 const TotalMember = () => {
-    const axiosPublic = useAxiosPublic()
+    const axiosSecure = useAxiosSecure()
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axiosPublic.get('/users', {
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem('access-token')}`
-                }
-            });
+            const res = await axiosSecure.get('/users');
             return res.data
         }
     })
 
     const handleAdmin = user => {
-        axiosPublic.patch(`/user/admin/${user._id}`)
+        axiosSecure.patch(`/users/admin/${user._id}`)
             .then(res => {
                 if (res.data.modifiedCount > 0) {
                     refetch()
@@ -47,7 +42,7 @@ const TotalMember = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosPublic.delete(`/user/${user._id}`)
+                axiosSecure.delete(`/user/${user._id}`)
                     .then(res => {
                         if (res.data.deletedCount > 0) {
                             refetch();
@@ -63,48 +58,49 @@ const TotalMember = () => {
         });
     }
     return (
-        <div>
-            <div>
-                <div className="">
-                    <table className="table">
-                        {/* head */}
-                        <thead>
-                            <tr className="text-base text-black bg-blue-400">
-                                <th className="text-center">ক্রমিক</th>
-                                <th className="text-center">আইডি নং</th>
-                                <th>সদস্যের নাম</th>
-                                <th>সদস্যের ইমেইল</th>
-                                <th className="text-center">রোল</th>
-                                <th className="text-center">ডিলিট</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                users.map((user, index) => <tr className="hover:bg-blue-100 cursor-pointer" key={user._id}>
-                                    <th className="text-center">{index + 1}</th>
-                                    <th className="text-center">{user.userId}</th>
-                                    <Link to={`/dashboard/member/${user._id}`}><th>{user.name}</th></Link>
 
-                                    <th>{user.email}</th>
-                                    <th className="text-center">
-                                        {
-                                            user.role === 'admin' ? 'এডমিন'
-                                                :
-                                                <button onClick={() => handleAdmin(user)} className="text-xl p-2 bg-blue-500 rounded text-white">
-                                                    <MdAdminPanelSettings className="text-lg" />
-                                                </button>
-                                        }
-                                    </th>
-                                    <th onClick={() => handleDelete(user)} className="text-center">
-                                        <button >
-                                            <MdDelete className="text-lg" />
-                                        </button>
-                                    </th>
-                                </tr>)
-                            }
-                        </tbody>
-                    </table>
-                </div>
+        <div>
+            <div className="">
+                <table className="table">
+                    {/* head */}
+                    <thead>
+                        <tr className="text-base text-black bg-blue-400">
+                            <th className="text-center">ক্রমিক</th>
+                            <th className="text-center">আইডি নং</th>
+                            <th>সদস্যের নাম</th>
+                            <th>সদস্যের ইমেইল</th>
+                            <th className="text-center">রোল</th>
+                            <th className="text-center">ডিলিট</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            users.map((user, index) => <tr className="hover:bg-blue-100 cursor-pointer" key={user._id}>
+                                <th className="text-center">{index + 1}</th>
+                                <th className="text-center">{user.userId}</th>
+                                <th>
+                                <Link to={`/dashboard/member/${user._id}`}>{user.name}</Link></th>
+                                
+
+                                <th>{user.email}</th>
+                                <th className="text-center">
+                                    {
+                                        user.role === 'admin' ? 'এডমিন'
+                                            :
+                                            <button onClick={() => handleAdmin(user)} className="text-xl p-2 bg-blue-500 rounded text-white">
+                                                <MdAdminPanelSettings className="text-lg" />
+                                            </button>
+                                    }
+                                </th>
+                                <th onClick={() => handleDelete(user)} className="text-center">
+                                    <button >
+                                        <MdDelete className="text-lg" />
+                                    </button>
+                                </th>
+                            </tr>)
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     );

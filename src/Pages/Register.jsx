@@ -61,6 +61,7 @@ const Register = () => {
                 })
                 axiosPublic.post('/user', user)
                 .then(res => console.log(res.data.insertedId))
+                navigate(location?.state ? location.state : '/dashboard')
             })
             .catch(error => {
                 console.log(error);

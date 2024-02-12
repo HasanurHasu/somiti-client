@@ -6,6 +6,7 @@ import { TbLogout2 } from "react-icons/tb";
 import { RxUpdate } from "react-icons/rx";
 import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import { IoMdHome } from "react-icons/io";
 
 const Sidebar = () => {
     const { logOut } = useContext(AuthContext);
@@ -27,6 +28,7 @@ const Sidebar = () => {
                     <Link><div className="w-full">
                         <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><FaMoneyCheckDollar className="text-lg" /> <span>লোনের হিসাব</span></button></div></Link>
                     <Link to='/dashboard/update-profile'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><RxUpdate className="text-lg" /> <span>প্রফাইল আপডেট</span></button></Link>
+                   
                 </div>
             </div>
             <div className="py-2">

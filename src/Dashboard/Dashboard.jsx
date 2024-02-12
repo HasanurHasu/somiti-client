@@ -9,6 +9,8 @@ import { TbLogout2 } from "react-icons/tb";
 import { RxUpdate } from "react-icons/rx";
 import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import { IoMdHome } from "react-icons/io";
+import useAdmin from "../Hooks/useAdmin";
 
 
 const Dashboard = () => {
@@ -22,7 +24,7 @@ const Dashboard = () => {
         navigate('/')
     }
 
-    const isAdmin = true;
+    const [isAdmin] = useAdmin();
 
     return (
         <div className="drawer lg:drawer-open">
@@ -53,12 +55,14 @@ const Dashboard = () => {
                                     <Link><div className="w-full">
                                         <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><FaMoneyCheckDollar className="text-lg" /> <span>লোনের হিসাব</span></button></div></Link>
                                     <Link to='/dashboard/update-profile'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><RxUpdate className="text-lg" /> <span>প্রফাইল আপডেট</span></button></Link>
+                                    <Link to='/'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><IoMdHome className="text-lg" /> <span>হোম</span></button></Link>
                                 </div>
                             </div>
                             :
                             <div className="full">
                                 <img className="w-24 my-4" src={img} alt="" />
                                 <div className="flex flex-col gap-1">
+                                    <Link to='/'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><IoMdHome className="text-lg" /> <span>হোম</span></button></Link>
                                     <Link to='/dashboard/update-profile'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><RxUpdate className="text-lg" /> <span>প্রফাইল আপডেট</span></button></Link>
                                 </div>
                             </div>
