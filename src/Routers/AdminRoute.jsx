@@ -1,15 +1,18 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../Provider/AuthProvider';
-import useAdmin from '../Hooks/useAdmin';
-import { useLocation } from 'react-router-dom';
+import { useContext } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
+import useAdmin from "../Hooks/useAdmin";
+
 
 const AdminRoute = ({children}) => {
-    const {user, loading} = useContext(AuthContext)
+    const { user, loading } = useContext(AuthContext);
     const [isAdmin, isAdminLoading] = useAdmin();
     const location = useLocation();
 
     if (loading || isAdminLoading) {
-        return <progress className="progress w-56"></progress>
+        return  <div className="flex justify-center items-center h-screen">
+            <span className="loading loading-ring loading-lg"></span>
+        </div>
     }
 
     if (user && isAdmin) {

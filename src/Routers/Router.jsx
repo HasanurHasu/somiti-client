@@ -37,7 +37,7 @@ const Router = createBrowserRouter([
         children: [
             {
                 path: "/dashboard/all-members",
-                element: <AdminRoute><TotalMember /></AdminRoute>
+                element: <TotalMember />
             },
             {
                 path: '/dashboard/member/:id',
