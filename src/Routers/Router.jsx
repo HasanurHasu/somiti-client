@@ -12,6 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 import ProfileUpdate from "../Dashboard/ProfileUpdate";
 import AdminRoute from "./AdminRoute";
 import ApplyForLoan from "../Dashboard/ApplyForLoan";
+import AllAppliedLoan from "../Dashboard/AllAppliedLoan";
 
 const Router = createBrowserRouter([
     {
@@ -53,6 +54,10 @@ const Router = createBrowserRouter([
                 path: '/dashboard/update-profile/:id',
                 element: <PrivateRoute><ProfileUpdate></ProfileUpdate></PrivateRoute>,
                 // loader: ({ params }) => fetch(`http://localhost:5000/user/${params.id}`)
+            },
+            {
+                path: '/dashboard/appliedLoan',
+                element: <PrivateRoute><AllAppliedLoan></AllAppliedLoan></PrivateRoute>
             }
         ]
     }

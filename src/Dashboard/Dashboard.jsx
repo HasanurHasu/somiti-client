@@ -53,6 +53,7 @@ const Dashboard = () => {
                                 <img className="w-24 my-4" src={img} alt="" />
                                 <div className="flex flex-col gap-1">
                                     <NavLink to='/dashboard/all-members'><button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><BsFillPeopleFill className="text-lg" /> <span>মোট সদস্য</span></button></NavLink>
+                                    <NavLink to='/dashboard/appliedLoan'><button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><BsFillPeopleFill className="text-lg" /> <span>লোনেরে আবেদন</span></button></NavLink>
                                     <Link><div className="w-full">
                                         <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><FaMoneyCheckDollar className="text-lg" /> <span>লোনের হিসাব</span></button></div></Link>
                                     <Link to='/dashboard/update-profile'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><RxUpdate className="text-lg" /> <span>প্রফাইল আপডেট</span></button></Link>
