@@ -13,6 +13,7 @@ import ProfileUpdate from "../Dashboard/ProfileUpdate";
 import AdminRoute from "./AdminRoute";
 import ApplyForLoan from "../Dashboard/ApplyForLoan";
 import AllAppliedLoan from "../Dashboard/AllAppliedLoan";
+import ActiveLoan from "../Dashboard/ActiveLoan";
 
 const Router = createBrowserRouter([
     {
@@ -58,6 +59,10 @@ const Router = createBrowserRouter([
             {
                 path: '/dashboard/appliedLoan',
                 element: <PrivateRoute><AllAppliedLoan></AllAppliedLoan></PrivateRoute>
+            },
+            {
+                path: '/dashboard/activeLoan',
+                element: <PrivateRoute><ActiveLoan></ActiveLoan></PrivateRoute>
             }
         ]
     }

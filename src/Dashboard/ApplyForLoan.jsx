@@ -13,7 +13,7 @@ const ApplyForLoan = () => {
         const name = form.name.value;
         const date = form.date.value;
         const mobile = form.mobile.value;
-        const religious = form.religious.value;
+        const religion = form.religion.value;
         const fatherName = form.fatherName.value;
         const matherName = form.matherName.value;
         const presentAddress = form.presentAddress.value;
@@ -21,7 +21,7 @@ const ApplyForLoan = () => {
         const NID = form.NID.value;
         const amount = form.amount.value;
 
-        const applyLoan = { name, date, email: user.email, mobile, religious, fatherName, matherName, presentAddress, permanentAddress, NID, amount };
+        const applyLoan = { name, date, email: user.email, mobile, religion, fatherName, matherName, presentAddress, permanentAddress, NID, amount, status: 'pending' };
         console.log(applyLoan);
 
         axiosPublic.post('/applyLoan', applyLoan)
@@ -50,7 +50,7 @@ const ApplyForLoan = () => {
                         </div>
                         <div>
                             <h3 className="label-text font-bold mb-1">ধর্ম<span className="text-red-600 text-lg">*</span> </h3>
-                            <input required type="name" name="religious" placeholder="ধর্ম" className="p-[8px] rounded-md w-full border" />
+                            <input required type="name" name="religion" placeholder="ধর্ম" className="p-[8px] rounded-md w-full border" />
                         </div>
                         <div>
                             <h3 className="label-text font-bold mb-1">পিতার নাম<span className="text-red-600 text-lg">*</span> </h3>
