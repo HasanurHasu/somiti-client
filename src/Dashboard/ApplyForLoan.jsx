@@ -21,7 +21,7 @@ const ApplyForLoan = () => {
         const NID = form.NID.value;
         const amount = form.amount.value;
 
-        const applyLoan = { name, date, email: user.email, mobile, religion, fatherName, matherName, presentAddress, permanentAddress, NID, amount, status: 'pending' };
+        const applyLoan = { name, date, email: user.email, mobile, religion, fatherName, matherName, presentAddress, permanentAddress, NID, loanInfo: [], amount, status: 'pending' };
         console.log(applyLoan);
 
         axiosPublic.post('/applyLoan', applyLoan)
