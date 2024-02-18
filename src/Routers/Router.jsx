@@ -14,6 +14,7 @@ import AdminRoute from "./AdminRoute";
 import ApplyForLoan from "../Dashboard/ApplyForLoan";
 import AllAppliedLoan from "../Dashboard/AllAppliedLoan";
 import ActiveLoan from "../Dashboard/ActiveLoan";
+import UserLoanInfo from "../Dashboard/UserLoanInfo";
 
 const Router = createBrowserRouter([
     {
@@ -43,9 +44,9 @@ const Router = createBrowserRouter([
                 element: <AdminRoute><TotalMember /></AdminRoute>
             },
             {
-                path: '/dashboard/member/:id',
-                element: <PrivateRoute><MemberInfo></MemberInfo></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/user/${params.id}`)
+                path: '/dashboard/loanInfo/:id',
+                element: <PrivateRoute><UserLoanInfo></UserLoanInfo></PrivateRoute>,
+                loader: ({ params }) => fetch(`http://localhost:5000/loanInfo/${params.id}`)
             },
             {
                 path: '/dashboard/applyLoan',

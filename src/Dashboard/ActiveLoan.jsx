@@ -34,7 +34,7 @@ const ActiveLoan = () => {
                         {
                             activeLoan.map((active, index) => <tr className="hover:bg-blue-100 cursor-pointer" key={active._id}>
                                 <th className="text-center">{index + 1}</th>
-                                <th className="text-center"><Link to={`/dashboard/member/${active._id}`}>{active.name}</Link></th>
+                                <th className="text-center"><Link to={`/dashboard/loanInfo/${active._id}`}>{active.name}</Link></th>
                                 <th className="text-right">{active.amount}/-</th>
                                 <th className="text-center">{active?.email}</th>
                                 <th className="text-center">{active.date}</th>
