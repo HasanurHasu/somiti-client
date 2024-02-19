@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
-import { GiConfirmed } from "react-icons/gi";
+import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Swal from 'sweetalert2'
+import BanglaNumber from "../Hooks/BanglaNumber";
 
 
 
@@ -77,7 +78,7 @@ const AllAppliedLoan = () => {
     return (
         <div>
             <div className="">
-                <table className="table">
+                <table className="table table-sm">
                     {/* head */}
                     <thead>
                         <tr className="text-base text-black bg-blue-400">
@@ -95,14 +96,16 @@ const AllAppliedLoan = () => {
                     <tbody>
                         {
                             appliedLoan.map((applied, index) => <tr className="hover:bg-blue-100 cursor-pointer" key={applied._id}>
-                                <th className="text-center">{index + 1}</th>
+                                <th className="text-center"><BanglaNumber number={index + 1}></BanglaNumber></th>
                                 <th className="text-center"><Link to={`/dashboard/confirmLoan/${applied._id}`}>{applied.name}</Link></th>
-                                <th className="text-right">{applied.amount}/-</th>
+                                <th className="text-right"><BanglaNumber number={applied.amount}></BanglaNumber>/-</th>
                                 <th className="text-center">{applied?.email}</th>
                                 <th className="text-center">{applied.date}</th>
                                 <th className="text-center">{applied.NID}</th>
                                 <th className="text-center">{applied.mobile} </th>
-                                <th className="text-center"><button onClick={() => handleConfirmLoan(applied)} className="bg-blue-500 py-2 px-5 text-white rounded">নিশ্চিত</button></th>
+                                <th className="text-center">
+                                    <Link to={`/dashboard/confirmLoan/${applied._id}`}><button><FaRegEdit className="text-lg" /></button></Link>
+                                </th>
                                 <th className="text-center"><button onClick={() => handleDeleteLoan(applied)}> <MdDelete className="text-lg" /></button></th>
                             </tr>)
                         }

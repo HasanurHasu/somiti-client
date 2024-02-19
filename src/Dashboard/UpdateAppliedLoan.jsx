@@ -1,10 +1,12 @@
 import { useLoaderData } from "react-router-dom";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const UpdateAppliedLoan = () => {
-    const { _id, name, date, email,religion, mobile, fatherName, matherName, presentAddress, permanentAddress, NID, amount, loanInfo } = useLoaderData();
+    const axiosSecure = useAxiosSecure();
+    const { _id, userId, name, date, email, religion, mobile, fatherName, matherName, presentAddress, permanentAddress, NID, amount, loanInfo } = useLoaderData();
 
 
-    const handleApplyLoan = (event) => {
+    const handleConfirmLoan = (event) => {
         event.preventDefault();
 
         const form = event.target;
@@ -18,25 +20,26 @@ const UpdateAppliedLoan = () => {
         const permanentAddress = form.permanentAddress.value;
         const NID = form.NID.value;
         const amount = form.amount.value;
+        const totalAmount = form.totalAmount.value;
 
-        const applyLoan = { name, date, email: email, mobile, religion, fatherName, matherName, presentAddress, permanentAddress, NID, loanInfo: [], amount, status: 'pending' };
+        const applyLoan = { userId, name, date, email: email, mobile, religion, fatherName, matherName, presentAddress, permanentAddress, NID, loanInfo: [], amount, status: 'confirmed', totalAmount };
         console.log(applyLoan);
 
-        axiosPublic.post('/applyLoan', applyLoan)
-        .then(res => console.log(res.data))
-
+        axiosSecure.patch(`/loanInfo/${_id}`, applyLoan)
+            .then(res => console.log(res.data))
     }
+
     return (
         <div className="mx-8 mt-4 lg:mx-24 lg:mt-8">
             <div className="flex flex-col items-center gap-2">
                 <h1 className="text-2xl font-bold">নতুন লোনের আবেদন ফরম</h1>
             </div>
             <div>
-                <form onSubmit={handleApplyLoan}>
+                <form onSubmit={handleConfirmLoan}>
                     <div className="lg:grid md:grid md:grid-cols-2 lg:grid-cols-2 gap-5 mt-5">
                         <div>
                             <h3 className="label-text font-bold mb-1">আপনার নাম <span className="text-red-600 text-lg">*</span> </h3>
-                            <input required type="name" defaultValue={name} name="name"className="p-[8px] rounded-md w-full border" />
+                            <input required type="name" defaultValue={name} name="name" className="p-[8px] rounded-md w-full border" />
                         </div>
                         <div>
                             <h3 className="label-text font-bold mb-1">জন্ম তারিখ<span className="text-red-600 text-lg">*</span> </h3>
@@ -73,6 +76,10 @@ const UpdateAppliedLoan = () => {
                         <div>
                             <h3 className="label-text font-bold mb-1">লোনের পরিমান<span className="text-red-600 text-lg">*</span> </h3>
                             <input required type="name" defaultValue={amount} name="amount" placeholder="লোনের পরিমান" className="p-[8px] rounded-md w-full border" />
+                        </div>
+                        <div>
+                            <h3 className="label-text font-bold mb-1">লোনের পরিশেধের পরিমান<span className="text-red-600 text-lg">*</span> </h3>
+                            <input required type="name" defaultValue={userId} name="totalAmount" placeholder="লোনের পরিমান" className="p-[8px] rounded-md w-full border" />
                         </div>
                         <input type="submit" className="w-full py-[8px] text-center font-medium bg-blue-700 text-white col-span-2 border rounded-md" value="আবেদন করুন" />
                     </div>

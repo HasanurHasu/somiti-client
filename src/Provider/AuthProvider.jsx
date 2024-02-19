@@ -56,6 +56,10 @@ const AuthProvider = ({ children }) => {
         }
     }, [axiosPublic])
 
+    useEffect(() => {
+        axiosPublic
+    }, [])
+
     const authInfo = {
         user,
         loading,

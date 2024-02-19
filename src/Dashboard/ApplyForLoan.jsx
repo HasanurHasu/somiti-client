@@ -1,10 +1,19 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const ApplyForLoan = () => {
+    const [userIdNo, setUserIdNo] = useState([]);
     const axiosPublic = useAxiosPublic();
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
+    const { userId } = userIdNo;
+    // console.log(userId);
+
+    useEffect(() => {
+        axiosPublic.get(`/userInfo/${user.email}`)
+            .then(res => setUserIdNo(res.data))
+    }, [])
+
 
     const handleApplyLoan = (event) => {
         event.preventDefault();
@@ -21,11 +30,11 @@ const ApplyForLoan = () => {
         const NID = form.NID.value;
         const amount = form.amount.value;
 
-        const applyLoan = { name, date, email: user.email, mobile, religion, fatherName, matherName, presentAddress, permanentAddress, NID, loanInfo: [], amount, status: 'pending' };
+        const applyLoan = { userId, name, date, email: user.email, mobile, religion, fatherName, matherName, presentAddress, permanentAddress, NID, loanInfo: [], amount, status: 'pending' };
         console.log(applyLoan);
 
         axiosPublic.post('/applyLoan', applyLoan)
-        .then(res => console.log(res.data))
+            .then(res => setUserIdNo(res.data))
 
     }
     return (

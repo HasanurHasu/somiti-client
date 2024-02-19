@@ -3,6 +3,7 @@ import { MdAdminPanelSettings, MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Swal from 'sweetalert2'
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import BanglaNumber from "../Hooks/BanglaNumber";
 
 
 const TotalMember = () => {
@@ -74,7 +75,7 @@ const TotalMember = () => {
 
         <div>
             <div className="">
-                <table className="table">
+                <table className="table table-sm">
                     {/* head */}
                     <thead>
                         <tr className="text-base text-black bg-blue-400">
@@ -89,8 +90,8 @@ const TotalMember = () => {
                     <tbody>
                         {
                             users.map((user, index) => <tr className="hover:bg-blue-100 cursor-pointer" key={user._id}>
-                                <th className="text-center">{index + 1}</th>
-                                <th className="text-center">{user.userId}</th>
+                                <th className="text-center"><BanglaNumber number={index + 1}></BanglaNumber></th>
+                                <th className="text-center"><BanglaNumber number={user.userId}></BanglaNumber></th>
                                 <th>
                                     <Link to={`/dashboard/member/${user._id}`}>{user.name}</Link></th>
 
@@ -100,7 +101,7 @@ const TotalMember = () => {
                                     {
                                         user.role === 'admin' ? 'এডমিন'
                                             :
-                                            <button onClick={() => handleAdmin(user)} className="text-xl p-2 bg-blue-500 rounded text-white">
+                                            <button onClick={() => handleAdmin(user)} className="p-1 bg-blue-500 rounded text-white">
                                                 <MdAdminPanelSettings className="text-lg" />
                                             </button>
                                     }

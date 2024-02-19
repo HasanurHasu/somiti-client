@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 import useAxiosSecure from '../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../Provider/AuthProvider';
+import BanglaNumber from '../Hooks/BanglaNumber';
 
 const UserLoanInfo = () => {
 
     const axiosSecure = useAxiosSecure()
+    const {user} = useContext(AuthContext);
     const { id } = useParams()
     console.log(id);
     const { data: userInfo = [], refetch } = useQuery({
@@ -17,7 +20,7 @@ const UserLoanInfo = () => {
         }
     })
     console.log(userInfo);
-    const { _id, name, email, mobile, fatherName, matherName, presentAddress, permanentAddress, NID, amount, loanInfo } = userInfo;
+    const { _id, userId, name, email, mobile, fatherName, matherName, presentAddress, permanentAddress, NID, amount, loanInfo } = userInfo;
 
     const totalPaidLoanAmount = loanInfo?.reduce((total, loan) => {
         return total + parseInt(loan.paidLoanAmount, 10);
@@ -42,8 +45,8 @@ const UserLoanInfo = () => {
         const form = e.target;
         const paidLoanAmount = form.paidLoanAmount.value;
         const savingsAmount = form.savingsAmount.value;
-
-        const getLoanInfo = { paidLoanAmount, savingsAmount, loanPaidDate };
+        const adminName = user.displayName;
+        const getLoanInfo = { paidLoanAmount, savingsAmount, loanPaidDate, adminName };
         console.log(getLoanInfo);
 
         Swal.fire({
@@ -56,7 +59,7 @@ const UserLoanInfo = () => {
             confirmButtonText: "জমা করুন"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.put(`http://localhost:5000/loanInfo/${_id}`, getLoanInfo)
+                axiosSecure.put(`http://localhost:5000/paidLoan/${_id}`, getLoanInfo)
                     .then(res => {
                         console.log(res.data);
                         if (res.data.modifiedCount> 0) {
@@ -79,12 +82,13 @@ const UserLoanInfo = () => {
     return (
         <div className=' mx-8'>
             <div className='grid grid-cols-3 gap-1'>
-                <div className='flex flex-col justify-center items-center gap-4 bg-slate-100'>
+                <div className='flex flex-col justify-center items-center gap-1 bg-slate-100'>
                     <div className="avatar">
                         <div className="w-32 rounded-full">
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU" />
                         </div>
                     </div>
+                    <h1 className='font-bold'>আইডি: <BanglaNumber number={userId}></BanglaNumber> </h1>
                     <h1 className='text-xl font-bold'>{name}</h1>
                 </div>
                 <div className='flex flex-col gap-5 bg-slate-100 p-4'>
@@ -102,7 +106,7 @@ const UserLoanInfo = () => {
                     </div>
                     <div>
                         <h3 className='text-base font-bold'>লোনের পরিমান</h3>
-                        <p>{amount}/-</p>
+                        <p><BanglaNumber number={amount}></BanglaNumber>/-</p>
                     </div>
                     <div>
                         <h3 className='text-base font-bold'>মোট ঋণ পরিশোধ</h3>
@@ -171,7 +175,7 @@ const UserLoanInfo = () => {
                     <thead className=''>
                         <tr className="bg-blue-400 text-sm text-black">
                             <th className="text-center py-2">ক্রমিক</th>
-                            <th className="text-center py-2">সদস্যের নাম</th>
+                            <th className="text-center py-2">জমাকারীর নাম</th>
                             <th className="text-center py-2">ঋণের পরিমান</th>
                             <th className="text-center py-2">কিস্তির তারিখ</th>
                             <th className="text-center py-2">কিস্তির পরিমান</th>
@@ -182,7 +186,7 @@ const UserLoanInfo = () => {
                         {
                             loanInfo?.map((info, index) => <tr className="hover:bg-blue-100 font-light" key={index}>
                                 <th className="text-center py-2">{index + 1}</th>
-                                <th className="text-center py-2">{name}</th>
+                                <th className="text-center py-2">{info?.adminName}</th>
                                 <th className="text-center py-2">{amount}</th>
                                 <th className="text-center py-2">{info?.loanPaidDate}</th>
                                 <th className="text-center py-2">{info?.paidLoanAmount}</th>
