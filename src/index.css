@@ -1,7 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;500;600;700;800&display=swap');
+@font-face {
+  font-family: 'kalpurush';
+  src: local('kalpurush'), url('../assets/fonts/kalpurush.ttf') format('woff2');
+  /* Add additional src lines for different font file formats if needed */
+  font-weight: normal;
+  font-style: normal;
+}
 
 body {
-  font-family: 'Baloo Da 2', sans-serif;
+  font-family: 'kalpurush', sans-serif;
 }
 
 @tailwind base;

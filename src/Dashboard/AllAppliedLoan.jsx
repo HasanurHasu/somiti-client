@@ -96,7 +96,7 @@ const AllAppliedLoan = () => {
                         {
                             appliedLoan.map((applied, index) => <tr className="hover:bg-blue-100 cursor-pointer" key={applied._id}>
                                 <th className="text-center">{index + 1}</th>
-                                <th className="text-center"><Link to={`/dashboard/member/${applied._id}`}>{applied.name}</Link></th>
+                                <th className="text-center"><Link to={`/dashboard/confirmLoan/${applied._id}`}>{applied.name}</Link></th>
                                 <th className="text-right">{applied.amount}/-</th>
                                 <th className="text-center">{applied?.email}</th>
                                 <th className="text-center">{applied.date}</th>

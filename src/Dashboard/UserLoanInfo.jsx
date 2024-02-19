@@ -19,10 +19,10 @@ const UserLoanInfo = () => {
     console.log(userInfo);
     const { _id, name, email, mobile, fatherName, matherName, presentAddress, permanentAddress, NID, amount, loanInfo } = userInfo;
 
-    const totalPaidLoanAmount = loanInfo.reduce((total, loan) => {
+    const totalPaidLoanAmount = loanInfo?.reduce((total, loan) => {
         return total + parseInt(loan.paidLoanAmount, 10);
     }, 0);
-    const totalSavingAmount = loanInfo.reduce((total, loan) => {
+    const totalSavingAmount = loanInfo?.reduce((total, loan) => {
         return total + parseInt(loan.savingsAmount, 10);
     }, 0);
 

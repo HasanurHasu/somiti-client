@@ -15,6 +15,7 @@ import ApplyForLoan from "../Dashboard/ApplyForLoan";
 import AllAppliedLoan from "../Dashboard/AllAppliedLoan";
 import ActiveLoan from "../Dashboard/ActiveLoan";
 import UserLoanInfo from "../Dashboard/UserLoanInfo";
+import UpdateAppliedLoan from "../Dashboard/UpdateAppliedLoan";
 
 const Router = createBrowserRouter([
     {
@@ -64,6 +65,11 @@ const Router = createBrowserRouter([
             {
                 path: '/dashboard/activeLoan',
                 element: <PrivateRoute><ActiveLoan></ActiveLoan></PrivateRoute>
+            },
+            {
+                path: '/dashboard/confirmLoan/:id',
+                element: <PrivateRoute><UpdateAppliedLoan></UpdateAppliedLoan></PrivateRoute>,
+                loader: ({ params }) => fetch(`http://localhost:5000/loanInfo/${params.id}`)
             }
         ]
     }
