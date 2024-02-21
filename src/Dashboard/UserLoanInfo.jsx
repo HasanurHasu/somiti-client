@@ -9,7 +9,7 @@ import BanglaNumber from '../Hooks/BanglaNumber';
 const UserLoanInfo = () => {
 
     const axiosSecure = useAxiosSecure()
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const { id } = useParams()
     console.log(id);
     const { data: userInfo = [], refetch } = useQuery({
@@ -20,7 +20,7 @@ const UserLoanInfo = () => {
         }
     })
     console.log(userInfo);
-    const { _id, userId, name, email, mobile, fatherName, matherName, presentAddress, permanentAddress, NID, amount, loanInfo } = userInfo;
+    const { _id, totalAmount, userId, name, email, mobile, fatherName, matherName, presentAddress, permanentAddress, NID, amount, loanInfo } = userInfo;
 
     const totalPaidLoanAmount = loanInfo?.reduce((total, loan) => {
         return total + parseInt(loan.paidLoanAmount, 10);
@@ -40,7 +40,7 @@ const UserLoanInfo = () => {
         const day = today.getDate();
 
         // Format the date as a string (optional, depending on your needs)
-        const loanPaidDate = `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+        const loanPaidDate = `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
 
         const form = e.target;
         const paidLoanAmount = form.paidLoanAmount.value;
@@ -50,25 +50,27 @@ const UserLoanInfo = () => {
         console.log(getLoanInfo);
 
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "আপনি কি নিশ্চিত?",
+            text: "এটি আপনি প্রতিরোধ করতে পারবেন না!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "জমা করুন"
+            confirmButtonText: "জমা করুন",
+            cancelButtonText: "বাতিল করুন"
         }).then((result) => {
             if (result.isConfirmed) {
                 axiosSecure.put(`http://localhost:5000/paidLoan/${_id}`, getLoanInfo)
                     .then(res => {
                         console.log(res.data);
-                        if (res.data.modifiedCount> 0) {
+                        if (res.data.modifiedCount > 0) {
                             refetch();
                             form.reset();
                             Swal.fire({
                                 title: "সফল হয়েছে",
                                 text: `${name} এর টাকা সফলভাবে জমা হয়েছে`,
-                                icon: "success"
+                                icon: "success",
+                                confirmButtonText: "ঠিক আছে"
                             });
                         }
                     })
@@ -90,31 +92,14 @@ const UserLoanInfo = () => {
                     </div>
                     <h1 className='font-bold'>আইডি: <BanglaNumber number={userId}></BanglaNumber> </h1>
                     <h1 className='text-xl font-bold'>{name}</h1>
+                    <p className='text-base font-bold'>ইমেইল: {email}</p>
+                    <p className='text-base font-bold'>মোবাইল: {mobile}</p>
                 </div>
-                <div className='flex flex-col gap-5 bg-slate-100 p-4'>
-                    <div>
-                        <h3 className='text-base font-bold'>এপ্লিকেন্ট ইমেইল</h3>
-                        <p>{email}</p>
-                    </div>
-                    <div>
-                        <h3 className='text-base font-bold'>এপ্লিকেন্ট মোবাইল</h3>
-                        <p>{mobile}</p>
-                    </div>
+                <div className='flex flex-col gap-2 bg-slate-100 p-4'>
                     <div>
                         <h3 className='text-base font-bold'>এপ্লিকেন্ট এনআইডি</h3>
                         <p>{NID}</p>
                     </div>
-                    <div>
-                        <h3 className='text-base font-bold'>লোনের পরিমান</h3>
-                        <p><BanglaNumber number={amount}></BanglaNumber>/-</p>
-                    </div>
-                    <div>
-                        <h3 className='text-base font-bold'>মোট ঋণ পরিশোধ</h3>
-                        <p>{totalPaidLoanAmount}/-</p>
-                    </div>
-
-                </div>
-                <div className='flex flex-col gap-5 bg-slate-100 p-4'>
                     <div>
                         <h3 className='text-base font-bold'>পিতার নাম</h3>
                         <p>{fatherName}</p>
@@ -131,9 +116,25 @@ const UserLoanInfo = () => {
                         <h3 className='text-base font-bold'>স্থায়ী ঠিকানা</h3>
                         <p>{permanentAddress}</p>
                     </div>
+
+                </div>
+                <div className='flex flex-col gap-2 bg-slate-100 p-4'>
+
+                    <div>
+                        <h3 className='text-base font-bold'>লোনের পরিমান</h3>
+                        <p><BanglaNumber number={amount}></BanglaNumber>/-</p>
+                    </div>
+                    <div>
+                        <h3 className='text-base font-bold'>সুদ সহ পরিমান</h3>
+                        <p><BanglaNumber number={totalAmount}></BanglaNumber>/-</p>
+                    </div>
+                    <div>
+                        <h3 className='text-base font-bold'>মোট ঋণ পরিশোধ</h3>
+                        <p><BanglaNumber number={totalPaidLoanAmount}></BanglaNumber>/-</p>
+                    </div>
                     <div>
                         <h3 className='text-base font-bold'>সঞ্চয় জমা</h3>
-                        <p>{totalSavingAmount}</p>
+                        <p><BanglaNumber number={totalSavingAmount}></BanglaNumber></p>
                     </div>
 
                 </div>
@@ -184,14 +185,16 @@ const UserLoanInfo = () => {
                     </thead>
                     <tbody>
                         {
-                            loanInfo?.map((info, index) => <tr className="hover:bg-blue-100 font-light" key={index}>
-                                <th className="text-center py-2">{index + 1}</th>
-                                <th className="text-center py-2">{info?.adminName}</th>
-                                <th className="text-center py-2">{amount}</th>
-                                <th className="text-center py-2">{info?.loanPaidDate}</th>
-                                <th className="text-center py-2">{info?.paidLoanAmount}</th>
-                                <th className="text-center py-2">{info?.savingsAmount}</th>
-                            </tr>)
+                            loanInfo?.map((info, index) => {
+                                return <tr className="hover:bg-blue-100 font-light" key={index}>
+                                    <th className="text-center py-2">{index + 1}</th>
+                                    <th className="text-center py-2">{info?.adminName}</th>
+                                    <th className="text-center py-2"><BanglaNumber number={amount}></BanglaNumber></th>
+                                    <th className="text-center py-2">{info?.loanPaidDate}</th>
+                                    <th className="text-center py-2"><BanglaNumber number={info?.paidLoanAmount} /></th>
+                                    <th className="text-center py-2"><BanglaNumber number={info?.savingsAmount}></BanglaNumber></th>
+                                </tr>;
+                            })
                         }
                     </tbody>
                 </table>
