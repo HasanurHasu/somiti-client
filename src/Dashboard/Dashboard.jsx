@@ -56,7 +56,7 @@ const Dashboard = () => {
                                     <NavLink to='/dashboard/appliedLoan'><button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><BsFillPeopleFill className="text-lg" /> <span>লোনের আবেদন</span></button></NavLink>
                                     <NavLink to='/dashboard/activeLoan'><button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><BsFillPeopleFill className="text-lg" /> <span>চলমান লোন</span></button></NavLink>
 
-                                    <Link><div className="w-full">
+                                    <Link to='/dashboard/loanSummary'><div className="w-full">
                                         <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><FaMoneyCheckDollar className="text-lg" /> <span>লোনের হিসাব</span></button></div></Link>
                                     <Link to='/dashboard/update-profile'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><RxUpdate className="text-lg" /> <span>প্রফাইল আপডেট</span></button></Link>
                                     <Link to='/'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><IoMdHome className="text-lg" /> <span>হোম</span></button></Link>

@@ -66,8 +66,8 @@ const UserLoanInfo = () => {
                             refetch();
                             form.reset();
                             Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
+                                title: "সফল হয়েছে",
+                                text: `${name} এর টাকা সফলভাবে জমা হয়েছে`,
                                 icon: "success"
                             });
                         }
