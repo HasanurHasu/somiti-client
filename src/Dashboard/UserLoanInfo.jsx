@@ -140,7 +140,7 @@ const UserLoanInfo = () => {
                 </div>
             </div>
             {/* add loan */}
-            <div className='mt-4'>
+            <div className='mt-4 w-full'>
                 <form action="" onSubmit={handleGetLoan} >
                     <div className='flex justify-between gap-2 bg-blue-200 p-2'>
                         <div className='bg-blue-200'>
@@ -171,7 +171,7 @@ const UserLoanInfo = () => {
             </div>
             {/* loan row */}
             <div className="">
-                <table className="table table-sm mt-2 mb-8">
+                <table className="table table-sm mt-2 mb-8 text-nowrap">
                     {/* head */}
                     <thead className=''>
                         <tr className="bg-blue-400 text-sm text-black">
