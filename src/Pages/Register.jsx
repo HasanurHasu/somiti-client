@@ -12,7 +12,7 @@ const Register = () => {
     const [counts, setCounts] = useState([]);
     const { count } = counts;
     useEffect(() => {
-        fetch('http://localhost:5000/userLength')
+        fetch('https://somiti-server.vercel.app/userLength')
             .then(res => res.json())
             .then(data => setCounts(data))
     }, [])

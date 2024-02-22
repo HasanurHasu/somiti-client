@@ -15,7 +15,7 @@ const UserLoanInfo = () => {
     const { data: userInfo = [], refetch } = useQuery({
         queryKey: ['userInfo'],
         queryFn: async () => {
-            const res = await axiosSecure.get(`http://localhost:5000/loanInfo/${id}`);
+            const res = await axiosSecure.get(`https://somiti-server.vercel.app/loanInfo/${id}`);
             return res.data
         }
     })
@@ -60,7 +60,7 @@ const UserLoanInfo = () => {
             cancelButtonText: "বাতিল করুন"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.put(`http://localhost:5000/paidLoan/${_id}`, getLoanInfo)
+                axiosSecure.put(`https://somiti-server.vercel.app/paidLoan/${_id}`, getLoanInfo)
                     .then(res => {
                         console.log(res.data);
                         if (res.data.modifiedCount > 0) {
@@ -77,7 +77,7 @@ const UserLoanInfo = () => {
             }
         });
 
-        // axiosSecure.put(`http://localhost:5000/loanInfo/${_id}`, getLoanInfo)
+        // axiosSecure.put(`https://somiti-server.vercel.app/loanInfo/${_id}`, getLoanInfo)
         //     .then(res => console.log(res.data))
     }
 

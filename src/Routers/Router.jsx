@@ -49,7 +49,7 @@ const Router = createBrowserRouter([
             {
                 path: '/dashboard/loanInfo/:id',
                 element: <PrivateRoute><UserLoanInfo></UserLoanInfo></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/loanInfo/${params.id}`)
+                loader: ({ params }) => fetch(`https://somiti-server.vercel.app/loanInfo/${params.id}`)
             },
             {
                 path: '/dashboard/applyLoan',
@@ -58,7 +58,7 @@ const Router = createBrowserRouter([
             {
                 path: '/dashboard/update-profile/',
                 element: <PrivateRoute><ProfileUpdate></ProfileUpdate></PrivateRoute>,
-                // loader: ({ params }) => fetch(`http://localhost:5000/user/${params.id}`)
+                // loader: ({ params }) => fetch(`https://somiti-server.vercel.app/user/${params.id}`)
             },
             {
                 path: '/dashboard/appliedLoan',
@@ -71,7 +71,7 @@ const Router = createBrowserRouter([
             {
                 path: '/dashboard/confirmLoan/:id',
                 element: <PrivateRoute><UpdateAppliedLoan></UpdateAppliedLoan></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/loanInfo/${params.id}`)
+                loader: ({ params }) => fetch(`https://somiti-server.vercel.app/loanInfo/${params.id}`)
             },
             {
                 path: '/dashboard/loanSummary',
