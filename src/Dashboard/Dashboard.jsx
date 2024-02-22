@@ -66,7 +66,9 @@ const Dashboard = () => {
                             <div className="full">
                                 <img className="w-24 my-4" src={img} alt="" />
                                 <div className="flex flex-col gap-1">
-                                    <NavLink to='/dashboard/applyLoan'><button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><MdAddCircleOutline className="text-lg" /> <span>লোনের আবেদন</span></button></NavLink>                                    <Link to='/dashboard/update-profile'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><RxUpdate className="text-lg" /> <span>প্রফাইল আপডেট</span></button></Link>
+                                    <NavLink to='/dashboard/applyLoan'><button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><MdAddCircleOutline className="text-lg" /> <span>লোনের আবেদন</span></button></NavLink>
+                                    <NavLink to='/dashboard/userLoan'><button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><MdAddCircleOutline className="text-lg" /> <span>চলমান লোন</span></button></NavLink>
+                                    <Link to='/dashboard/update-profile'> <button className="flex items-center gap-2 py-2 border text-left  pl-2 border-blue-600 rounded hover:bg-blue-600 hover:text-white w-full"><RxUpdate className="text-lg" /> <span>প্রফাইল আপডেট</span></button></Link>
                                 </div>
                             </div>
                     }

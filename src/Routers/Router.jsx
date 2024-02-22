@@ -17,6 +17,7 @@ import ActiveLoan from "../Dashboard/ActiveLoan";
 import UserLoanInfo from "../Dashboard/UserLoanInfo";
 import UpdateAppliedLoan from "../Dashboard/UpdateAppliedLoan";
 import LoanSummary from "../Dashboard/LoanSummary";
+import UserLoan from "../Dashboard/UserLoan";
 
 const Router = createBrowserRouter([
     {
@@ -75,6 +76,10 @@ const Router = createBrowserRouter([
             {
                 path: '/dashboard/loanSummary',
                 element: <PrivateRoute><LoanSummary></LoanSummary></PrivateRoute>
+            },
+            {
+                path: '/dashboard/userLoan',
+                element: <PrivateRoute><UserLoan></UserLoan></PrivateRoute>
             }
         ]
     }
